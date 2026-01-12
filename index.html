@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARK-KNIGHT | ULTIMATE SYSTEM V2.0</title>
+    <style>
+        :root {
+            --neon-red: #ff0000;
+            --dark-bg: #050505;
+            --card-bg: #111111;
+            --text-color: #ffffff;
+            --shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle, #1a0000 0%, #050505 100%);
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            background: rgba(0,0,0,0.95); border-bottom: 2px solid var(--neon-red);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 25px; z-index: 1000; box-shadow: var(--shadow);
+        }
+
+        .logo-brand { font-size: 22px; font-weight: 900; color: var(--neon-red); letter-spacing: 3px; text-shadow: var(--shadow); }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .acc-status { border: 1px solid var(--neon-red); padding: 5px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: 0.3s; }
+        .acc-status:hover { background: var(--neon-red); color: black; }
+        .menu-trigger { font-size: 35px; cursor: pointer; color: var(--neon-red); line-height: 1; transition: 0.3s; }
+
+        /* SIDEBAR ANIMATION */
+        #sidebar {
+            position: fixed; top: 0; right: -350px; width: 300px; height: 100%;
+            background: var(--card-bg); border-left: 3px solid var(--neon-red);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1001; 
+            padding: 90px 15px 20px; box-shadow: -15px 0 35px rgba(0,0,0,0.9);
+        }
+        #sidebar.active { right: 0; }
+        #sidebar a {
+            display: block; padding: 15px; color: white; text-decoration: none;
+            font-weight: bold; font-size: 14px; border-bottom: 1px solid #222;
+            transition: 0.3s; border-radius: 8px; margin-bottom: 5px;
+        }
+        #sidebar a:hover { background: var(--neon-red); transform: translateX(-10px); color: black; }
+
+        .overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); z-index: 1000; backdrop-filter: blur(5px);
+        }
+
+        /* PAGE ENGINE */
+        .page { display: none; padding: 100px 15px 60px; min-height: 100vh; width: 100%; opacity: 0; transform: translateY(20px); transition: 0.4s; }
+        .page.active { display: flex; flex-direction: column; align-items: center; opacity: 1; transform: translateY(0); }
+
+        /* LOBBY SECTION */
+        .lobby-content { text-align: center; max-width: 550px; width: 100%; }
+        .lobby-img { width: 100%; border: 3px solid var(--neon-red); border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .audio-container { width: 100%; background: #000; padding: 10px; border-radius: 10px; border: 1px solid var(--neon-red); margin-bottom: 20px; }
+        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
+
+        .dev-info-box {
+            background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;
+            border-left: 5px solid var(--neon-red); text-align: left;
+            font-family: 'monospace'; font-size: 13px; line-height: 1.7;
+        }
+        .author-btn {
+            display: block; width: 100%; text-align: center; background: var(--neon-red);
+            color: white; padding: 12px; margin: 15px 0 5px; border-radius: 8px;
+            text-decoration: none; font-weight: bold; font-size: 14px;
+        }
+
+        /* TOOLS UI */
+        .tool-card {
+            background: var(--card-bg); width: 100%; max-width: 500px; 
+            padding: 25px; border-radius: 20px; border: 1px solid #333; 
+            margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h2 { color: var(--neon-red); margin-bottom: 20px; font-size: 20px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        input { 
+            width: 100%; padding: 14px; margin-bottom: 15px; background: #000; 
+            border: 1px solid #444; color: white; border-radius: 8px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        .execute-btn { 
+            width: 100%; padding: 15px; background: var(--neon-red); border: none; 
+            color: white; font-weight: 900; border-radius: 8px; cursor: pointer;
+            transition: 0.3s; letter-spacing: 1px;
+        }
+        .execute-btn:hover { background: #ff3333; transform: scale(1.02); }
+
+        /* SPOTIFY UI */
+        .sp-list { margin-top: 20px; width: 100%; }
+        .sp-item { 
+            background: #1a1a1a; display: flex; gap: 15px; padding: 12px; 
+            border-radius: 12px; margin-bottom: 10px; border: 1px solid #333; align-items: center;
+        }
+        .sp-cover { width: 55px; height: 55px; border-radius: 8px; border: 1px solid var(--neon-red); }
+
+        /* TIC TAC TOE 6X6 */
+        .game-grid {
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+            background: var(--neon-red); padding: 6px; margin-top: 20px; border-radius: 10px;
+        }
+        .cell {
+            width: 45px; height: 45px; background: var(--dark-bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        .cell:hover { background: #222; color: var(--neon-red); }
+
+        #iqcRes img { width: 100%; border-radius: 10px; border: 2px solid var(--neon-red); margin-top: 15px; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-brand">DARK-KNIGHT</div>
+        <div class="nav-right">
+            <div class="acc-status" onclick="showPage('lobby')">👤 Bibz System</div>
+            <div class="menu-trigger" onclick="toggleSide()">⋮</div>
+        </div>
+    </header>
+
+    <div class="overlay" id="overlay" onclick="toggleSide()"></div>
+
+    <nav id="sidebar">
+        <a href="#" onclick="showPage('lobby')">🏠 DASHBOARD LOBBY</a>
+        <a href="#" onclick="showPage('bugwa')">☣️ BUG WHATSAPP</a>
+        <a href="#" onclick="showPage('ddos')">🔥 DDOS ATTACK L7</a>
+        <a href="#" onclick="showPage('pter')">🏗️ PTERODACTYL PANEL</a>
+        <a href="#" onclick="showPage('spotify')">🎵 SPOTIFY PLAYER</a>
+        <a href="#" onclick="showPage('downloader')">📥 ALL DOWNLOADER</a>
+        <a href="#" onclick="showPage('iqc')">📱 IPHONE CHAT (IQC)</a>
+        <a href="#" onclick="showPage('game')">🎮 TIC TAC TOE 6X6</a>
+    </nav>
+
+    <div id="lobby" class="page active">
+        <div class="lobby-content">
+            <img src="https://files.catbox.moe/2qt55x.jpg" class="lobby-img">
+            <div class="audio-container">
+                <audio controls autoplay loop><source src="https://kintil.edgeone.app/"></audio>
+            </div>
+            <div class="dev-info-box">
+                (list fitur) <br>
+                ========================<br>
+                Nama developer <br>
+                # Author # : Raka?!<br>
+                # dev # : Bibz<br>
+                # with ai # : Dark_knight<br>
+                # ᴠᴇʀsɪᴏɴ # : ᴠ 1.0.0<br>
+                # ɴᴏᴛᴇ : ᴍᴀᴀғ ᴋʟᴏᴋ ᴀᴅᴀ ᴋᴇᴋᴜʀᴀɴɢᴀɴ ᴛɪɴɢɢᴀʟ ʜᴜʙᴜɴɢɪ ᴀᴅᴍɪɴ<br>
+                <a href="https://wa.me/6281315177549" class="author-btn">ɴᴏ ᴀᴜᴛʜᴏʀ : 6281315177549</a>
+                <a href="https://t.me/628556767890" class="author-btn">ᴛᴇʟᴇ ᴅᴇᴠ : 628556767890</a>
+                ========================<br>
+                ᴅɪ ᴄɪᴘᴛᴀᴋᴀɴ ᴘᴀᴅᴀ: 11 ᴊᴀɴ 2026<br>
+                ========================
+            </div>
+        </div>
+    </div>
+
+    <div id="bugwa" class="page">
+        <div class="tool-card">
+            <h2>☣️ WA BUG EXPLOIT</h2>
+            <input type="text" id="target" placeholder="Nomor Target (628...)">
+            <input type="number" id="loop" placeholder="Jumlah Serangan (1-100)">
+            <button class="execute-btn" onclick="alert('Sending Virus to ' + document.getElementById('target').value)">EKSEKUSI</button>
+        </div>
+    </div>
+
+    <div id="ddos" class="page">
+        <div class="tool-card">
+            <h2>🔥 DDOS ATTACK ENGINE</h2>
+            <input type="text" placeholder="URL Target (https://site.com)">
+            <input type="number" placeholder="Threads (Max 500)">
+            <button class="execute-btn" onclick="alert('Flood Attack Started!')">LAUNCH ATTACK</button>
+        </div>
+    </div>
+
+    <div id="pter" class="page">
+        <div class="tool-card">
+            <h2>🏗️ PANEL PTERODACTYL</h2>
+            <input type="text" placeholder="Domain Panel">
+            <input type="text" placeholder="API Key">
+            <button class="execute-btn" onclick="alert('Connecting to Panel...')">CREATE USER/SERVER</button>
+        </div>
+    </div>
+
+    <div id="spotify" class="page">
+        <div class="tool-card">
+            <h2>🎵 SPOTIFY PLAYER & DL</h2>
+            <input type="text" id="spInp" placeholder="Cari lagu kesukaanmu...">
+            <button class="execute-btn" onclick="searchMusic()">CARI SEKARANG</button>
+            <div id="spList" class="sp-list"></div>
+        </div>
+    </div>
+
+    <div id="downloader" class="page">
+        <div class="tool-card">
+            <h2>📥 MEDIA DOWNLOADER</h2>
+            <p style="font-size:10px; margin-bottom:10px; color:#888;">Suport: TikTok, YouTube, IG, FB</p>
+            <input type="text" id="dlUrl" placeholder="Tempel Link Media Di Sini...">
+            <button class="execute-btn" onclick="alert('Menganalisis Link...')">DOWNLOAD SEKARANG</button>
+        </div>
+    </div>
+
+    <div id="iqc" class="page">
+        <div class="tool-card">
+            <h2>📱 FAKE IPHONE CHAT (IQC)</h2>
+            <input type="text" id="iqcText" placeholder="Tulis teks chat...">
+            <button class="execute-btn" onclick="makeIqc()">GENERATE IMAGE</button>
+            <div id="iqcRes"></div>
+        </div>
+    </div>
+
+    <div id="game" class="page">
+        <div class="tool-card">
+            <h2>🎮 TIC TAC TOE 6X6 (OFFLINE)</h2>
+            <div class="game-grid" id="tttGrid"></div>
+            <button class="execute-btn" style="margin-top:20px;" onclick="resetGame()">RESET BOARD</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CORE NAVIGATION ---
+        function toggleSide() {
+            document.getElementById('sidebar').classList.toggle('active');
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(id);
+            target.classList.add('active');
+            if(document.getElementById('sidebar').classList.contains('active')) toggleSide();
+            window.scrollTo(0,0);
+        }
+
+        // --- SPOTIFY ENGINE ---
+        async function searchMusic() {
+            const query = document.getElementById('spInp').value;
+            const res = await fetch(`https://api.nefyu.my.id/api/search/spotify?q=${query}`);
+            const data = await res.json();
+            
+            let html = '';
+            data.result.forEach(t => {
+                const id = t.url.split('/').pop();
+                html += `
+                <div class="sp-item">
+                    <img src="${t.thumbnail}" class="sp-cover">
+                    <div style="flex:1">
+                        <p style="font-size:13px; font-weight:bold;">${t.title}</p>
+                        <p style="font-size:11px; color:#aaa;">${t.artist}</p>
+                        <div id="p-${id}">
+                            <button onclick="loadAudio('${t.url}', 'p-${id}')" style="background:var(--neon-red); border:none; padding:5px 10px; border-radius:5px; margin-top:5px; font-size:10px; font-weight:bold; cursor:pointer;">▶️ PLAY</button>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('spList').innerHTML = html;
+        }
+
+        async function loadAudio(url, divId) {
+            const container = document.getElementById(divId);
+            container.innerHTML = "<small style='color:cyan'>⚔️ SYSTEM LOADING...</small>";
+            const res = await fetch(`https://api.nefyu.my.id/api/download/spotify?url=${url}`);
+            const data = await res.json();
+            container.innerHTML = `
+                <audio controls autoplay style="width:100%; height:25px; margin-top:5px; filter:invert(1);">
+                    <source src="${data.result.download}">
+                </audio>
+                <a href="${data.result.download}" target="_blank" style="font-size:10px; color:var(--neon-red); text-decoration:none;">[ DOWNLOAD MP3 ]</a>`;
+        }
+
+        // --- IQC ENGINE ---
+        function makeIqc() {
+            const txt = document.getElementById('iqcText').value;
+            const url = `https://brat.siputzx.my.id/iphone-quoted?time=12.00&batteryPercentage=90&carrierName=AXIS&messageText=${encodeURIComponent(txt)}&emojiStyle=apple`;
+            document.getElementById('iqcRes').innerHTML = `<img src="${url}">`;
+        }
+
+        // --- GAME ENGINE 6X6 ---
+        let board = Array(36).fill('');
+        function renderBoard() {
+            const grid = document.getElementById('tttGrid');
+            grid.innerHTML = '';
+            board.forEach((val, i) => {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.innerText = val;
+                cell.onclick = () => {
+                    if(board[i] === '') {
+                        board[i] = 'X'; renderBoard();
+                        setTimeout(cpuMove, 400);
+                    }
+                };
+                grid.appendChild(cell);
+            });
+        }
+        function cpuMove() {
+            let empty = board.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+            if(empty.length > 0) {
+                board[empty[Math.floor(Math.random() * empty.length)]] = 'O';
+                renderBoard();
+            }
+        }
+        function resetGame() { board = Array(36).fill(''); renderBoard(); }
+        renderBoard();
+
+    </script>
+</body>
+</html>
