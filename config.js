@@ -1,38 +1,38 @@
 const fs = require('fs')
 
 //settings bot
-global.owner = "6281257180104","6281275372632"
+global.owner = "6283151568511"
 global.namaowner = "Drayy"
-global.reply = "https://img12.pixhost.to/images/516/570736381_yopaihosting.jpg"
+global.botNumber = "6285129621563"
+global.reply = "https://dray.vercel.app/media/sgdgzbqgz.jpg"
 global.status = true
 global.prefa = ["!", ".", ",", "🐤", "🗿"]; //not change!!
 
-//mess
+// Settings Panel Pterodactyl 
+global.egg = "15"; // Egg ID
+global.nestid = "5"; // Nest ID
+global.loc = "1"; // Location ID
+global.domain = "";
+global.apikey = ""; // PTLC
+global.capikey = ""; // PTLA
+
+// msg //
 global.mess = {
-	owner: `╭━━〔 𝐀𝐤𝐬𝐞𝐬 𝐃𝐢 𝐓𝐨𝐥𝐚𝐤 ❌ 〕━⬣
-┃ Fitur Ini Khusus Owner Bot ⚠️
-╰━━━━━━━━━━━━━━━━━⬣`,
-	admin: `╭━━〔 𝐀𝐤𝐬𝐞𝐬 𝐃𝐢 𝐓𝐨𝐥𝐚𝐤 ❌ 〕━⬣
-┃ Fitur Ini Khusus Admin Group ⚠️
-╰━━━━━━━━━━━━━━━━━⬣`,
-	botAdmin: `╭━━〔 𝐀𝐤𝐬𝐞𝐬 𝐃𝐢 𝐓𝐨𝐥𝐚𝐤 ❌ 〕━⬣
-┃ Bot Harus Jadi Admin Terlebih dahulu ⚠️
-╰━━━━━━━━━━━━━━━━━⬣`,
-	group: `╭━━〔 𝐀𝐤𝐬𝐞𝐬 𝐃𝐢 𝐓𝐨𝐥𝐚𝐤 ❌ 〕━⬣
-┃ Fitur Ini Hanya berlaku di Group ⚠️
-╰━━━━━━━━━━━━━━━━━⬣`,
-	private: `╭━━〔 𝐀𝐤𝐬𝐞𝐬 𝐃𝐢 𝐓𝐨𝐥𝐚𝐤 ❌ 〕━⬣
-┃ Fitur Ini Hanya dapat di lakukan di private cht ⚠️
-╰━━━━━━━━━━━━━━━━━⬣`,
-	murbug: `╭━━〔 𝐀𝐤𝐬𝐞𝐬 𝐃𝐢 𝐓𝐨𝐥𝐚𝐤 ❌ 〕━⬣
-┃ Fitur Ini Hanya Untuk User Premium ⚠️
-╰━━━━━━━━━━━━━━━━━⬣`
+ketua: " ⇝ Access Denied \nKhusus Owner",
+prem: "Kamu belum Premium",
+murbug: "Kamu belum mendapat akses murbug\n minta add ke owner",
+owner: " ⇝ Access Denied \nKhusus Owner",
+admin: "Fitur Ini Khusus Admin Group ⚠️",
+botAdmin: "Bot Harus Jadi Admin Terlebih dahulu ⚠️",
+group: "Fitur Ini Hanya berlaku di Group ⚠️",
+private: "Fitur Ini Hanya dapat di lakukan di private chat ⚠️",
+japost: " -- Format Japost Tidak Tersedia -- ",
+rekber: " -- List Rekber Tidak Tersedia -- "
 }
 
-
 //nama seticker
-global.packname = ' '
-global.author = '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
+global.packname = 'Zeno'
+global.author = 'By Dray🪷\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
 
 //End Settings
 
